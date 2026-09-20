@@ -9,6 +9,11 @@ GUI TestForge addresses two problems:
 
 It compiles human-approved semantic Test IR into native Playwright specs and writes them into the host project's existing `testDir`. The host keeps its Playwright config, fixtures, projects, reporters, retries, traces, CI, and normal `playwright test` command.
 
+## Training Deck
+
+- [English: AI Test Design and Deterministic Execution](docs/presentations/GUI_TestForge_Test_Team_Training_en_V1.1.pptx)
+- [简体中文：AI 测试设计与确定性执行](docs/presentations/GUI_TestForge_Test_Team_Training_zh-CN_V1.1.pptx)
+
 ![GUI TestForge native Playwright report](docs/assets/demo-workflow.png)
 
 [Watch the real end-to-end demo](docs/assets/demo-workflow.webm)

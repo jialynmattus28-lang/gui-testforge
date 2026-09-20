@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const pairs = [
@@ -69,6 +69,24 @@ test('public guidance distinguishes compilation from explicit execution handoff'
   assert.match(`${readme}\n${guide}`, /Use bundled demo/);
   assert.match(guide, /target application URL.*GUI Driver/is);
   assert.match(chineseGuide, /被测程序 URL.*GUI Driver/is);
+});
+
+test('bilingual training decks are published and linked from both READMEs', async () => {
+  const englishDeck = 'docs/presentations/GUI_TestForge_Test_Team_Training_en_V1.1.pptx';
+  const chineseDeck = 'docs/presentations/GUI_TestForge_Test_Team_Training_zh-CN_V1.1.pptx';
+  const [readme, chineseReadme, englishStat, chineseStat] = await Promise.all([
+    readFile('README.md', 'utf8'),
+    readFile('README.zh-CN.md', 'utf8'),
+    stat(englishDeck),
+    stat(chineseDeck),
+  ]);
+
+  assert.ok(englishStat.size > 10_000, 'English training deck must be a real PPTX file');
+  assert.ok(chineseStat.size > 10_000, 'Chinese training deck must be a real PPTX file');
+  assert.match(readme, new RegExp(englishDeck.replaceAll('.', '\\.')));
+  assert.match(readme, new RegExp(chineseDeck.replaceAll('.', '\\.')));
+  assert.match(chineseReadme, new RegExp(englishDeck.replaceAll('.', '\\.')));
+  assert.match(chineseReadme, new RegExp(chineseDeck.replaceAll('.', '\\.')));
 });
 
 test('internal implementation plans are not included in the public tree', async () => {
