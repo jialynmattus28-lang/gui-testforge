@@ -2,9 +2,10 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-> 在 GUI 尚未出现时，把原生 GUI 测试脚本编译到你现有的 Playwright 项目中；继续使用原来的 Playwright，执行阶段零 AI。
+本项目解决以下问题：
 
-GUI TestForge 只解决现有 Playwright 流程中的一个关键堵点：测试团队已经知道要验证哪些 GUI 业务行为，但此时还没有可执行程序、Selector、URL 和最终 DOM，因而无法提前完成可执行脚本。
+1. 如何在 GUI 界面还没开发完成前，就能根据测试用例生成所有测试脚本。
+2. 对于严肃的商业场景，如何确保测试脚本以非 AI 方式生成和执行，杜绝 AI 可能带来的风险，例如跳过用例、伪造测试结果、临时修改测试脚本以适应错误的代码等。
 
 它把经人工审批的语义 Test IR 编译为原生 Playwright spec，并写入使用方项目原有的 `testDir`。使用方继续保留自己的 Playwright 配置、Fixture、Project、Reporter、重试、Trace、CI 和正常的 `playwright test` 命令。
 

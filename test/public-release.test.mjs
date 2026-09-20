@@ -27,8 +27,8 @@ test('public repository metadata is complete and bilingual', async () => {
   assert.match(contents[1], /git clone https:\/\/github\.com\/jialynmattus28-lang\/gui-testforge\.git/);
   assert.match(contents[0], /existing Playwright project/);
   assert.match(contents[1], /现有.*Playwright 项目/);
-  assert.match(contents[0], /zero AI/);
-  assert.match(contents[1], /零 AI/);
+  assert.match(contents[0], /generated and executed without AI/);
+  assert.match(contents[1], /非 AI 方式生成和执行/);
   assert.match(contents[8], /Discussions/);
   assert.match(contents[9], /Discussions/);
 });

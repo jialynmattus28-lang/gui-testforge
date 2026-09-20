@@ -57,7 +57,7 @@ test('public documentation positions TestForge as an existing Playwright precomp
   assert.match(source, /existing Playwright/);
   assert.match(source, /COMPILED \/ NOT_EVALUATED/);
   assert.match(source, /host.*Playwright Runner/is);
-  assert.match(source, /before the GUI exists/i);
+  assert.match(source, /before GUI development is complete/i);
 });
 
 test('public guidance distinguishes compilation from explicit execution handoff', async () => {

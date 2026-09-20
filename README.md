@@ -2,11 +2,12 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-> Compile native GUI test scripts into your existing Playwright project before the GUI exists. Keep Playwright in charge. Run with zero AI.
+GUI TestForge addresses two problems:
 
-GUI TestForge fills one gap in an established Playwright workflow: the team knows the GUI behavior to test, but the executable application, selectors, URLs, and final DOM do not exist yet.
+1. How to generate all GUI test scripts from test cases before GUI development is complete.
+2. In serious commercial environments, how to ensure test scripts are generated and executed without AI, eliminating AI-related risks such as skipping test cases, fabricating test results, or temporarily modifying test scripts to accommodate incorrect application code.
 
-It turns human-approved semantic Test IR into native Playwright specs inside the host project's existing `testDir`. The host keeps its Playwright config, fixtures, projects, reporters, retries, traces, CI, and normal `playwright test` command.
+It compiles human-approved semantic Test IR into native Playwright specs and writes them into the host project's existing `testDir`. The host keeps its Playwright config, fixtures, projects, reporters, retries, traces, CI, and normal `playwright test` command.
 
 ![GUI TestForge native Playwright report](docs/assets/demo-workflow.png)
 
