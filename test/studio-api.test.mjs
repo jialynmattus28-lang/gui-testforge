@@ -3,7 +3,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
-import { startStudio, withoutAiCredentials } from '../apps/studio/server.mjs';
+import { normalizePlaywrightReport, startStudio, withoutAiCredentials } from '../apps/studio/server.mjs';
 
 let root;
 let studio;
@@ -22,6 +22,23 @@ test('native Playwright execution cannot inherit AI credentials', () => {
     CI: '1',
     APP_AUTH_TOKEN: 'keep-this',
   });
+});
+
+test('native report recognizes generated specs with relative paths', () => {
+  const result = normalizePlaywrightReport({
+    suites: [{
+      specs: [{
+        file: 'generated/testforge/card-loss.spec.mjs',
+        title: 'CL-001 · Card loss',
+        tests: [{ results: [{ status: 'passed' }] }],
+      }],
+    }],
+    stats: {},
+  }, 0);
+
+  assert.equal(result.testVerdict, 'PASS');
+  assert.equal(result.summary.passed, 1);
+  assert.equal(result.cases[0].caseId, 'CL-001');
 });
 
 async function request(pathname, body) {

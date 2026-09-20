@@ -61,7 +61,11 @@ test('runner records PASS evidence and excludes AI credentials from its child pr
   assert.equal(result.executionStatus, 'COMPLETED');
   assert.equal(result.cases[0].evidence[0].actual, 'face');
   assert.ok(progress.length > 0);
-  assert.equal(result.environmentKeys.some((key) => /AI|OPENAI|ANTHROPIC/i.test(key)), false);
+  assert.equal(
+    result.environmentKeys.some((key) => /AI|OPENAI|ANTHROPIC/i.test(key)),
+    false,
+    `Unexpected AI-like environment keys: ${result.environmentKeys.join(', ')}`,
+  );
 });
 
 test('runner reports a wrong expectation as FAIL without changing execution status', async () => {

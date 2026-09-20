@@ -177,9 +177,9 @@ function collectSpecs(suites, collected = []) {
   return collected;
 }
 
-function normalizePlaywrightReport(report, exitCode) {
+export function normalizePlaywrightReport(report, exitCode) {
   const generatedSpecs = collectSpecs(report.suites).filter((spec) => (
-    String(spec.file ?? '').split(path.sep).join('/').includes('/generated/testforge/')
+    /(^|\/)generated\/testforge\//.test(String(spec.file ?? '').split(path.sep).join('/'))
   ));
   const cases = generatedSpecs.map((spec) => {
     const attempts = spec.tests?.flatMap((item) => item.results ?? []) ?? [];
