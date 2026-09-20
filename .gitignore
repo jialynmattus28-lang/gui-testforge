@@ -1,0 +1,7 @@
+node_modules/
+.env
+.gui-testforge/
+test-results/
+playwright-report/
+*.log
+.DS_Store

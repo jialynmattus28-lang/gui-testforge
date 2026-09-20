@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GUI TestForge</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">TF</span>
+          <div><strong>GUI TestForge</strong><small>Deterministic GUI testing</small></div>
+        </div>
+        <nav aria-label="Workspace">
+          <p class="nav-label">Workspace</p>
+          <button class="tree-node active" type="button">Bank Channel System</button>
+          <button class="tree-leaf active" type="button">Card Loss</button>
+        </nav>
+        <div class="trust-note">
+          <strong>Execution boundary</strong>
+          <span>Compilation, execution, evidence, and verdicts run without AI.</span>
+        </div>
+      </aside>
+      <main>
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Synthetic reference workflow</p>
+            <h1>Card Loss</h1>
+          </div>
+          <span class="status-badge">Local workspace</span>
+        </header>
+        <section id="error-banner" class="error-banner" role="alert" hidden></section>
+        <nav id="stage-nav" class="stage-nav" aria-label="Workflow stages"></nav>
+        <section id="operation" class="operation" aria-live="polite" hidden>
+          <div><strong id="operation-label"></strong><span id="operation-time">0s</span></div>
+          <progress id="operation-progress" max="100"></progress>
+        </section>
+        <section id="content" class="content" aria-live="polite"></section>
+      </main>
+    </div>
+    <dialog id="edit-dialog">
+      <form method="dialog">
+        <h2>Edit Test IR</h2>
+        <p>Editing invalidates the current approval for this case.</p>
+        <textarea id="edit-source" spellcheck="false" aria-label="Test IR JSON"></textarea>
+        <div class="dialog-actions">
+          <button value="cancel" class="secondary">Cancel</button>
+          <button id="save-edit" value="default">Save changes</button>
+        </div>
+      </form>
+    </dialog>
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

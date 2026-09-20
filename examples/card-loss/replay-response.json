@@ -1,0 +1,176 @@
+{
+  "recordingVersion": 1,
+  "source": "offline-replay",
+  "label": "Recorded AI proposal for the synthetic Card Loss PRD",
+  "cases": [
+    {
+      "id": "CL-ID-001",
+      "title": "Successful identity read opens face verification",
+      "requirementRefs": ["REQ-1"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "success" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [
+            { "target": "screen", "equals": "face" },
+            { "target": "messageCode", "equals": "IDENTITY_OK" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-ID-002",
+      "title": "Failed identity read cannot continue",
+      "requirementRefs": ["REQ-1"],
+      "fixture": { "identityOutcome": "failure", "faceOutcome": "success" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [
+            { "target": "screen", "equals": "identity" },
+            { "target": "messageCode", "equals": "IDENTITY_READ_FAILED" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-FACE-001",
+      "title": "Failed face verification cannot show cards",
+      "requirementRefs": ["REQ-2"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "failure" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "face" }]
+        },
+        {
+          "action": { "name": "verifyFace", "args": {} },
+          "assertions": [
+            { "target": "screen", "equals": "face" },
+            { "target": "messageCode", "equals": "FACE_VERIFICATION_FAILED" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-CARD-001",
+      "title": "An ineligible card remains visible but cannot be selected",
+      "requirementRefs": ["REQ-3"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "success" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "face" }]
+        },
+        {
+          "action": { "name": "verifyFace", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "cards" }]
+        },
+        {
+          "action": { "name": "selectCard", "args": { "cardId": "CARD-2002" } },
+          "assertions": [
+            { "target": "selectedCardId", "equals": null },
+            { "target": "card.selectable", "args": { "cardId": "CARD-2002" }, "equals": false }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-CARD-002",
+      "title": "Continuing without a selected card is blocked",
+      "requirementRefs": ["REQ-3"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "success" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "face" }]
+        },
+        {
+          "action": { "name": "verifyFace", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "cards" }]
+        },
+        {
+          "action": { "name": "continue", "args": {} },
+          "assertions": [
+            { "target": "screen", "equals": "cards" },
+            { "target": "messageCode", "equals": "CARD_REQUIRED" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-PWD-001",
+      "title": "Wrong password is rejected without changing card status",
+      "requirementRefs": ["REQ-5"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "success", "correctPassword": "123456" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "face" }]
+        },
+        {
+          "action": { "name": "verifyFace", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "cards" }]
+        },
+        {
+          "action": { "name": "selectCard", "args": { "cardId": "CARD-1001" } },
+          "assertions": [{ "target": "selectedCardId", "equals": "CARD-1001" }]
+        },
+        {
+          "action": { "name": "continue", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "password" }]
+        },
+        {
+          "action": { "name": "submitPassword", "args": { "value": "000000" } },
+          "assertions": [
+            { "target": "screen", "equals": "password" },
+            { "target": "messageCode", "equals": "PASSWORD_INCORRECT" },
+            { "target": "card.status", "args": { "cardId": "CARD-1001" }, "equals": "normal" },
+            { "target": "businessOutcome", "equals": "IN_PROGRESS" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "IN_PROGRESS"
+    },
+    {
+      "id": "CL-LOSS-001",
+      "title": "Correct password completes card loss",
+      "requirementRefs": ["REQ-4"],
+      "fixture": { "identityOutcome": "success", "faceOutcome": "success", "correctPassword": "123456" },
+      "steps": [
+        {
+          "action": { "name": "readIdentity", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "face" }]
+        },
+        {
+          "action": { "name": "verifyFace", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "cards" }]
+        },
+        {
+          "action": { "name": "selectCard", "args": { "cardId": "CARD-1001" } },
+          "assertions": [{ "target": "selectedCardId", "equals": "CARD-1001" }]
+        },
+        {
+          "action": { "name": "continue", "args": {} },
+          "assertions": [{ "target": "screen", "equals": "password" }]
+        },
+        {
+          "action": { "name": "submitPassword", "args": { "value": "123456" } },
+          "assertions": [
+            { "target": "screen", "equals": "result" },
+            { "target": "messageCode", "equals": "CARD_LOST" },
+            { "target": "card.status", "args": { "cardId": "CARD-1001" }, "equals": "lost" },
+            { "target": "businessOutcome", "equals": "SUCCEEDED" }
+          ]
+        }
+      ],
+      "expectedBusinessOutcome": "SUCCEEDED"
+    }
+  ],
+  "reviewFindings": []
+}

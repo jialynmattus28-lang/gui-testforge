@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Card Loss Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>Northstar Bank</strong>
+        <span>Self-service channel</span>
+      </div>
+      <span class="synthetic">Synthetic demo</span>
+    </header>
+    <main>
+      <section class="progress" aria-label="Progress">
+        <span data-step="identity">1 Identity</span>
+        <span data-step="face">2 Face</span>
+        <span data-step="cards">3 Card</span>
+        <span data-step="password">4 Confirm</span>
+      </section>
+      <section id="screen" class="screen" aria-live="polite"></section>
+      <p id="message" class="message" data-testid="message-code"></p>
+    </main>
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

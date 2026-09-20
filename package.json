@@ -1,0 +1,41 @@
+{
+  "name": "gui-testforge",
+  "version": "0.1.0",
+  "description": "Build executable GUI test scripts before the GUI exists. Run them without AI.",
+  "author": "吴笛（Dean Wu）",
+  "homepage": "https://github.com/jialynmattus28-lang/gui-testforge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jialynmattus28-lang/gui-testforge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jialynmattus28-lang/gui-testforge/issues"
+  },
+  "type": "module",
+  "license": "Apache-2.0",
+  "private": true,
+  "bin": {
+    "testforge": "./scripts/testforge.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:demo": "node --test test/demo-e2e.mjs",
+    "test:host": "node --test test/existing-playwright-host.test.mjs",
+    "audit:public": "node scripts/audit-public-release.mjs",
+    "configure-ai": "node scripts/configure-ai.mjs",
+    "testforge": "node scripts/testforge.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.58.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  },
+  "peerDependencies": {
+    "@playwright/test": ">=1.45.0 <2"
+  }
+}
