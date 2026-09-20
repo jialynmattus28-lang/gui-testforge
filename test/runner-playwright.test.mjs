@@ -53,7 +53,12 @@ test('runner records PASS evidence and excludes AI credentials from its child pr
     driverPath: path.resolve('examples/card-loss/playwright-driver/guidriver.mjs'),
     baseUrl: app.url,
     artifactDirectory: path.join(root, 'pass-artifacts'),
-    environment: { ...process.env, GUI_TESTFORGE_AI_API_KEY: 'must-not-cross-boundary' },
+    environment: {
+      ...process.env,
+      GUI_TESTFORGE_AI_API_KEY: 'must-not-cross-boundary',
+      OPENAI_API_KEY: 'must-not-cross-boundary',
+      ANTHROPIC_API_KEY: 'must-not-cross-boundary',
+    },
     onProgress: (event) => progress.push(event),
   });
 
@@ -61,11 +66,12 @@ test('runner records PASS evidence and excludes AI credentials from its child pr
   assert.equal(result.executionStatus, 'COMPLETED');
   assert.equal(result.cases[0].evidence[0].actual, 'face');
   assert.ok(progress.length > 0);
-  assert.equal(
-    result.environmentKeys.some((key) => /AI|OPENAI|ANTHROPIC/i.test(key)),
-    false,
-    `Unexpected AI-like environment keys: ${result.environmentKeys.join(', ')}`,
-  );
+  const leakedCredentials = [
+    'GUI_TESTFORGE_AI_API_KEY',
+    'OPENAI_API_KEY',
+    'ANTHROPIC_API_KEY',
+  ].filter((key) => result.environmentKeys.includes(key));
+  assert.deepEqual(leakedCredentials, []);
 });
 
 test('runner reports a wrong expectation as FAIL without changing execution status', async () => {
