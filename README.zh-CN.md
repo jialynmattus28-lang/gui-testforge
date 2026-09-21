@@ -9,14 +9,20 @@
 
 它把经人工审批的语义 Test IR 编译为原生 Playwright spec，并写入使用方项目原有的 `testDir`。使用方继续保留自己的 Playwright 配置、Fixture、Project、Reporter、重试、Trace、CI 和正常的 `playwright test` 命令。
 
+![GUI TestForge 端到端操作流程](docs/assets/demo-workflow-zh-CN.gif)
+
+[观看高清中文版演示视频](docs/assets/demo-workflow-zh-CN.webm)
+
 ## 培训材料
 
-- [中文版：AI 测试设计与确定性执行](docs/presentations/GUI_TestForge_Test_Team_Training_zh-CN_V1.1.pptx)
-- [English: AI Test Design and Deterministic Execution](docs/presentations/GUI_TestForge_Test_Team_Training_en_V1.1.pptx)
+下面直接展示两页核心内容，不下载文件也能理解整体流程和信任边界。
 
-![GUI TestForge 原生 Playwright 报告](docs/assets/demo-workflow.png)
+![AI 辅助测试设计与非 AI 编译器](docs/assets/training/zh-CN/slide-01.png)
 
-[观看真实端到端演示视频](docs/assets/demo-workflow.webm)
+![Test IR、GUI Driver 与确定性执行](docs/assets/training/zh-CN/slide-02.png)
+
+- [下载中文版 PowerPoint](docs/presentations/GUI_TestForge_Test_Team_Training_zh-CN_V1.1.pptx)
+- [Download the English PowerPoint](docs/presentations/GUI_TestForge_Test_Team_Training_en_V1.1.pptx)
 
 ## 五分钟 Demo
 

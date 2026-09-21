@@ -26,6 +26,7 @@
     "test:demo": "node --test test/demo-e2e.mjs",
     "test:host": "node --test test/existing-playwright-host.test.mjs",
     "audit:public": "node scripts/audit-public-release.mjs",
+    "capture:readme": "node scripts/capture-readme-demo.mjs",
     "configure-ai": "node scripts/configure-ai.mjs",
     "testforge": "node scripts/testforge.mjs"
   },

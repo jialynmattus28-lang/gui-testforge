@@ -89,6 +89,40 @@ test('bilingual training decks are published and linked from both READMEs', asyn
   assert.match(chineseReadme, new RegExp(chineseDeck.replaceAll('.', '\\.')));
 });
 
+test('localized README media exists and stays separated by language', async () => {
+  const localizedMedia = {
+    english: [
+      'docs/assets/demo-workflow-en.gif',
+      'docs/assets/demo-workflow-en.webm',
+      'docs/assets/training/en/slide-01.png',
+      'docs/assets/training/en/slide-02.png',
+    ],
+    chinese: [
+      'docs/assets/demo-workflow-zh-CN.gif',
+      'docs/assets/demo-workflow-zh-CN.webm',
+      'docs/assets/training/zh-CN/slide-01.png',
+      'docs/assets/training/zh-CN/slide-02.png',
+    ],
+  };
+  const [readme, chineseReadme] = await Promise.all([
+    readFile('README.md', 'utf8'),
+    readFile('README.zh-CN.md', 'utf8'),
+  ]);
+
+  for (const asset of [...localizedMedia.english, ...localizedMedia.chinese]) {
+    const assetStat = await stat(asset);
+    assert.ok(assetStat.size > 1_000, `${asset} must contain published media`);
+  }
+  for (const asset of localizedMedia.english) {
+    assert.match(readme, new RegExp(asset.replaceAll('.', '\\.')));
+    assert.doesNotMatch(chineseReadme, new RegExp(asset.replaceAll('.', '\\.')));
+  }
+  for (const asset of localizedMedia.chinese) {
+    assert.match(chineseReadme, new RegExp(asset.replaceAll('.', '\\.')));
+    assert.doesNotMatch(readme, new RegExp(asset.replaceAll('.', '\\.')));
+  }
+});
+
 test('internal implementation plans are not included in the public tree', async () => {
   const files = await readdir('docs/superpowers/plans').catch(() => []);
   assert.deepEqual(files, []);
